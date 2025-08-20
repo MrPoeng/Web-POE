@@ -1,0 +1,168 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+ }
+ 
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('images/2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark tint */
+    z-index: -1;
+}
+
+/* We inherit navbar styling from style.css for consistency.
+   This small tweak fixes the navbar at the top and removes any border. */
+.navbar {
+    position: absolute; /* Stick navbar to the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Keep above all content */
+    padding: 15px 0;
+}
+
+.menu ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: antiquewhite;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+.menu ul li a:hover,
+.menu ul li a.active {
+    color: goldenrod; /* You can change to match Home's hover if preferred */
+}
+
+.about-container {
+    max-width: 900px;
+    margin: 0 auto 100px auto; 
+    padding: 120px 20px 20px 20px; /* Top padding to prevent overlap with fixed navbar */
+    color: goldenrod;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.about-container h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #D4AF37;
+    margin-bottom: 20px;
+}
+
+.about-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: burlywood;
+}
+
+.site-footer_content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 50px 20px;
+    border-top: 2px solid #D4AF37;
+}
+
+.site-footer_item {
+    flex: 1 1 25%;
+    min-width: 240px;
+}
+
+.site-footer_item-inner {
+    padding: 0 15px;
+}
+
+.site-footer_item-inner .h4 {
+    font-family: 'Playfair Display';
+    font-size: 1.4rem;
+    color: #D4AF37;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5),
+                 0 0 10px rgba(212, 175, 55, 0.4),
+                 0 0 10px rgba(212, 175, 55, 0.4);
+    transition: text-shadow 0.5s ease;
+}
+
+.site-footer_item-inner .h4:hover {
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.8),
+                 0 0 15px rgba(212, 175, 55, 0.6),
+                 0 0 25px rgba(212, 175, 55, 0.5);
+}
+
+
+.site-footer_linklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.site-footer_linklist-item {
+    margin-bottom: 10px;
+}
+
+.site-footer_linklist-item a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.site-footer_linklist-item a:hover {
+    color: goldenrod;
+    padding-left: 5px;
+}
+
+.site-footer_rte p {
+    margin: 6px 0;
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.site-footer_rte p:hover {
+    color:antiquewhite;
+}
+
+.site-footer_rte p strong {
+    color: #D4AF37;
+}
+
+@media (max-width: 992px) {
+    .site-footer_item {
+        flex: 1 1 50%;
+    }
+}
+
+@media (max-width: 600px) {
+    .site-footer_item {
+        flex: 1 1 100%;
+    }
+}

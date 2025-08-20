@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- 
+Acknowledgement: This page's concept was inspired by the 
+age verification page seen when visit such websites
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supreme Hubbly - Age Verification</title>
+    <link rel="stylesheet" href="style-age.css" />
+</head>
+<body>
+    <h1>Welcome to Supreme Hubbly</h1>
+    <p>Are you older than 18 Years?</p>
+    <div>
+        <button id="YesBtn">Yes</button>
+        <button id="NoBtn">No</button>
+    </div>
+
+
+    <script>
+    document.getElementById('YesBtn').addEventListener('click',() =>{ window.location.href= 'HOME.html';});
+    document.getElementById('NoBtn').addEventListener('click',() =>{ window.location.href= 'https://www.google.com';});
+    </script>
+</body>
+</html>
