@@ -230,3 +230,24 @@ ul  li a:hover{
     margin-bottom: 25px;
     transition: none;
 }
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: goldenrod;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none; /* hidden by default */
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    z-index: 100;
+}
+.back-to-top:hover {
+    background: darkgoldenrod;
+}

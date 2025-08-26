@@ -13,7 +13,8 @@ Acknowledgement: Main structure and page layout inspired/copied from
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-
+    <link rel="icon" type="images/x-icon" href="Images/logo4.png">
+ 
 </head>
 
 <body>
@@ -43,7 +44,7 @@ Acknowledgement: Main structure and page layout inspired/copied from
                 <br><span>Elevate the Moment</span><br>
             </h2>
         </div>
-            <p class="last-line">The Experience with Ultimate Relaxation</p>
+            <p class="last-line">The Ultimate Experience with Relaxation</p>
             <p class="par">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, dolore eligendi! Inventore pariatur aperiam odit aut <br>
                 incidunt suscipit,recusandae vitae eos beatae! Officiis, debitis esse assumenda est fuga nostrum pariatur.</p>
 
@@ -58,7 +59,10 @@ Acknowledgement: Main structure and page layout inspired/copied from
                     </div>
                  </div>   
         </div>       
-     </div>            
+     </div>
+
+    <button id="backToTop" class="back-to-top" aria-label="back-to-top````````````````````````````````````````````````````````````"> ↑ </button> 
+
   <script>
     const joinBtn = document.querySelector('.cn');
     const slogan = document.querySelector('.slogan');
@@ -75,6 +79,25 @@ Acknowledgement: Main structure and page layout inspired/copied from
       slogan.classList.remove('fadeout');
       search.classList.remove('fadeout');
       par.classList.remove('fadeout');
+    });
+
+    // Back to Top Button functionality
+    const backToTopBtn = document.getElementById("backToTop");
+    const hubbliesSection = document.getElementById("hubblies");
+
+    window.addEventListener("scroll", () => {
+        if (!hubbliesSection) return;
+        const hubbliesTop = hubbliesSection ? hubbliesSection.offsetTop : 0;
+
+        if (window.scrollY >= hubbliesTop) {
+            backToTopBtn.style.display = "flex";
+        } else {
+            backToTopBtn.style.display = "none";
+    }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
     });
   </script>
 </body>

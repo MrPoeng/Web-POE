@@ -228,7 +228,7 @@ body {
 
 .product-image img {
     width: 100%;
-    height: 500px;
+    height: 460px;
     object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
@@ -260,7 +260,7 @@ body {
 
 .product-price {
     font-size: 14px;
-    color: #d32f2f;
+    color: black;
     font-weight: bold;
 }
 
@@ -281,4 +281,33 @@ body {
     .product-grid {
         grid-template-columns: 1fr;
     }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: goldenrod;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: none; /* hidden by default */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.back-to-top:hover {
+  background: darkgoldenrod;
 }
