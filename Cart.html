@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="main">
+        <div class="navbar">
+            <div class="icon">
+                <img src="images/logo4.png" alt="Supreme Shisha Logo">    
+            </div>
+
+            <div class="menu">
+                <ul>
+                    <li><a href="HOME.html">HOME</a></li>
+                    <li><a href="ABOUT.html">ABOUT</a></li>
+                    <li><a href="PRODUCT.html">PRODUCTS</a></li>
+                    <li><a href="CONTACT.html">CONTACT</a></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <main class="cart-container">
+        <h1>Your Cart</h1>
+        <a href="PRODUCT.html" class="continue-link">← Continue Shopping</a>
+
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be injected here by JS -->
+        </div>
+
+        <div class="order-summary">
+            <div class="free-ship-progress" id="free-ship-progress">R0 to free shipping</div>
+
+            <div class="promo">
+                <input type="text" id="promo-code" placeholder="Promo code">
+                <button id="apply-promo">Apply</button>
+            </div>
+
+            <div class="totals">
+                <p>Subtotal: <span id="subtotal">R0</span></p>
+                <p>Shipping: <span id="shipping">R100</span></p>
+                <p>Tax: <span id="tax">R0</span></p>
+                <h2>Total: <span id="total">R0</span></h2>
+            </div>
+
+            <button class="checkout-btn">Checkout</button>
+            <button class="express-checkout">Pay via PayPal</button>
+        </div>
+    </main>
+
+    <!--Mini cart slide-in-->
+    <div class="mini-cart" id="mini-cart">
+        <h3>Cart</h3>
+        <div id="mini-cart-items"></div>
+        <button id="close-mini-cart">Close</button>
+    </div>
+
+    <script src="cart.js"></script>
+    
+</body>
+</html>

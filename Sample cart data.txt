@@ -1,0 +1,99 @@
+// Sample cart data
+let cart = [
+  { id: 1, name: "Oduman Cosmo", flavor: "Mint", price: 1600, qty: 1, img: "Hubbly Pics/61.webp" },
+  { id: 2, name: "Al Mani Hubbly", flavor: "Grape", price: 800, qty: 2, img: "Hubbly Pics/62.webp" }
+];
+
+let shippingCost = 100;
+let promoDiscount = 0;
+const freeShippingThreshold = 2000;
+
+const cartItemsEl = document.getElementById("cart-items");
+const subtotalEl = document.getElementById("subtotal");
+const shippingEl = document.getElementById("shipping");
+const taxEl = document.getElementById("tax");
+const totalEl = document.getElementById("total");
+const freeShipProgressEl = document.getElementById("free-ship-progress");
+const promoInput = document.getElementById("promo-code");
+const applyPromoBtn = document.getElementById("apply-promo");
+
+function renderCart() {
+  cartItemsEl.innerHTML = "";
+  cart.forEach(item => {
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `
+      <img src="${item.img}" alt="${item.name}">
+      <div class="item-details">
+        <h3>${item.name}</h3>
+        <p>Flavor: ${item.flavor}</p>
+        <p>R${item.price} each</p>
+        <div class="quantity">
+          <button onclick="changeQty(${item.id}, -1)">−</button>
+          <input type="number" value="${item.qty}" min="1" onchange="setQty(${item.id}, this.value)">
+          <button onclick="changeQty(${item.id}, 1)">+</button>
+        </div>
+        <button onclick="removeItem(${item.id})">Remove</button>
+      </div>
+    `;
+    cartItemsEl.appendChild(div);
+  });
+  updateTotals();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (item) {
+    item.qty += delta;
+    if (item.qty < 1) item.qty = 1;
+    renderCart();
+  }
+}
+
+function setQty(id, qty) {
+  const item = cart.find(i => i.id === id);
+  if (item) {
+    item.qty = parseInt(qty);
+    if (item.qty < 1) item.qty = 1;
+    renderCart();
+  }
+}
+
+function removeItem(id) {
+  cart = cart.filter(i => i.id !== id);
+  renderCart();
+}
+
+function applyPromo() {
+  const code = promoInput.value.trim().toUpperCase();
+  if (code === "SHISHA10") {
+    promoDiscount = 0.1;
+  } else {
+    promoDiscount = 0;
+  }
+  updateTotals();
+}
+
+function updateTotals() {
+  let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  let discount = subtotal * promoDiscount;
+  let tax = (subtotal - discount) * 0.05; // 5% tax
+  let total = subtotal - discount + tax + shippingCost;
+
+  subtotalEl.textContent = `R${(subtotal - discount).toFixed(2)}`;
+  shippingEl.textContent = `R${shippingCost}`;
+  taxEl.textContent = `R${tax.toFixed(2)}`;
+  totalEl.textContent = `R${total.toFixed(2)}`;
+
+  // Update free shipping progress
+  let progressPercent = Math.min((subtotal / freeShippingThreshold) * 100, 100);
+  freeShipProgressEl.querySelector("::after");
+  freeShipProgressEl.style.setProperty('--progress', progressPercent + "%");
+  freeShipProgressEl.textContent = subtotal >= freeShippingThreshold ? "Free shipping!" : `R${freeShippingThreshold - subtotal} to free shipping`;
+}
+
+// Promo code listener
+applyPromoBtn.addEventListener("click", applyPromo);
+
+// Initial render
+renderCart();

@@ -311,3 +311,138 @@ html {
 .back-to-top:hover {
   background: darkgoldenrod;
 }
+
+/*Add to Cart Button */
+.add-to-cart {
+    background: goldenrod;
+    border: none;
+    color: antiquewhite;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background: darkgoldenrod;
+}
+
+/* mini caet sidebar */
+.mini-cart {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100%;
+    background: #222;
+    color: #fff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    transition: right 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    z-index: 2000;
+}
+
+.mini-cart.open {
+    right: 0;
+}
+
+.mini-cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: burlywood;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.mini-cart-item {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.mini-cart-footer {
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.subtotal {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 12px;
+    background: goldenrod;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.checkout-btn:hover {
+    background: darkgoldenrod;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cart-item-span {
+    font-size: 14px;
+}
+
+.cart-item button {
+    background: red;
+    border: none;
+    color: antiquewhite;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    border-radius: 50%;
+    border: none;
+    background: goldenrod;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none; /* hidden by default */
+    z-index: 1000;
+}
+.back-to-top:hover {
+    background: darkgoldenrod;
+}
+
+.cart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12px;
+    font-size: 24px;
+    color: antiquewhite;
+    text-decoration: none;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.cart-btn:hover {
+    transform: scale(1.1);
+    color: gold;
+}
