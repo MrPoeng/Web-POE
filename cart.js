@@ -1,6 +1,5 @@
 // ------------------- INITIAL SETUP -------------------
 
-// Load cart from localStorage or initialize empty
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 let shippingCost = 100;
@@ -27,37 +26,41 @@ function saveCart() {
 }
 
 function renderCart() {
-  cartItemsEl.innerHTML = "";
-  miniCartEl.innerHTML = "";
+  if (cartItemsEl) cartItemsEl.innerHTML = "";
+  if (miniCartEl) miniCartEl.innerHTML = "";
 
   cart.forEach(item => {
     // Full cart
-    const div = document.createElement("div");
-    div.classList.add("cart-item");
-    div.innerHTML = `
-      <img src="${item.img}" alt="${item.name}">
-      <div class="item-details">
-        <h3>${item.name}</h3>
-        <p>Flavor: ${item.flavor}</p>
-        <p>R${item.price} each</p>
-        <div class="quantity">
-          <button onclick="changeQty('${item.id}', '${item.flavor}', -1)">−</button>
-          <input type="number" value="${item.qty}" min="1" 
-                 onchange="setQty('${item.id}', '${item.flavor}', this.value)">
-          <button onclick="changeQty('${item.id}', '${item.flavor}', 1)">+</button>
+    if (cartItemsEl) {
+      const div = document.createElement("div");
+      div.classList.add("cart-item");
+      div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div class="item-details">
+          <h3>${item.name}</h3>
+          <p>Flavor: ${item.flavor}</p>
+          <p>R${item.price} each</p>
+          <div class="quantity">
+            <button onclick="changeQty('${item.id}', '${item.flavor}', -1)">−</button>
+            <input type="number" value="${item.qty}" min="1" 
+                   onchange="setQty('${item.id}', '${item.flavor}', this.value)">
+            <button onclick="changeQty('${item.id}', '${item.flavor}', 1)">+</button>
+          </div>
+          <button onclick="removeItem('${item.id}', '${item.flavor}')">Remove</button>
         </div>
-        <button onclick="removeItem('${item.id}', '${item.flavor}')">Remove</button>
-      </div>
-    `;
-    cartItemsEl.appendChild(div);
+      `;
+      cartItemsEl.appendChild(div);
+    }
 
     // Mini cart
-    const miniDiv = document.createElement("div");
-    miniDiv.classList.add("mini-cart-item");
-    miniDiv.innerHTML = `
-      <p>${item.name} (${item.flavor}) x ${item.qty} - R${(item.price * item.qty).toFixed(2)}</p>
-    `;
-    miniCartEl.appendChild(miniDiv);
+    if (miniCartEl) {
+      const miniDiv = document.createElement("div");
+      miniDiv.classList.add("mini-cart-item");
+      miniDiv.innerHTML = `
+        <p>${item.name} (${item.flavor}) x ${item.qty} - R${(item.price * item.qty).toFixed(2)}</p>
+      `;
+      miniCartEl.appendChild(miniDiv);
+    }
   });
 
   updateTotals();
@@ -95,6 +98,7 @@ function addToCart(product) {
     cart.push(product);
   }
   renderCart();
+  openMiniCart();
 }
 
 // ------------------- PROMO -------------------
@@ -117,47 +121,55 @@ function updateTotals() {
   let tax = (subtotal - discount) * 0.05; // 5% tax
   let total = subtotal - discount + tax + shippingCost;
 
-  subtotalEl.textContent = `R${(subtotal - discount).toFixed(2)}`;
-  shippingEl.textContent = `R${shippingCost}`;
-  taxEl.textContent = `R${tax.toFixed(2)}`;
-  totalEl.textContent = `R${total.toFixed(2)}`;
+  if (subtotalEl) subtotalEl.textContent = `R${(subtotal - discount).toFixed(2)}`;
+  if (shippingEl) shippingEl.textContent = `R${shippingCost}`;
+  if (taxEl) taxEl.textContent = `R${tax.toFixed(2)}`;
+  if (totalEl) totalEl.textContent = `R${total.toFixed(2)}`;
 
   // Free shipping progress
-  let progressPercent = Math.min((subtotal / freeShippingThreshold) * 100, 100);
-  freeShipProgressEl.style.setProperty("--progress", progressPercent + "%");
-  freeShipProgressEl.textContent =
-    subtotal >= freeShippingThreshold
-      ? "Free shipping!"
-      : `R${freeShippingThreshold - subtotal} to free shipping`;
+  if (freeShipProgressEl) {
+    let progressPercent = Math.min((subtotal / freeShippingThreshold) * 100, 100);
+    freeShipProgressEl.style.setProperty("--progress", progressPercent + "%");
+    freeShipProgressEl.textContent =
+      subtotal >= freeShippingThreshold
+        ? "Free shipping!"
+        : `R${freeShippingThreshold - subtotal} to free shipping`;
+  }
 }
 
 // ------------------- MINI CART -------------------
 
 function openMiniCart() {
-  miniCartContainer.classList.add("open");
+  if (miniCartContainer) miniCartContainer.classList.add("open");
 }
 
 function closeMiniCart() {
-  miniCartContainer.classList.remove("open");
+  if (miniCartContainer) miniCartContainer.classList.remove("open");
 }
 
-closeMiniCartBtn.addEventListener("click", closeMiniCart);
+if (closeMiniCartBtn) {
+  closeMiniCartBtn.addEventListener("click", closeMiniCart);
+}
 
 // ------------------- INIT -------------------
 
-applyPromoBtn.addEventListener("click", applyPromo);
+if (applyPromoBtn) {
+  applyPromoBtn.addEventListener("click", applyPromo);
+}
 
 // Expose addToCart globally so product pages can use it
 window.addToCart = addToCart;
 
+// Render existing cart on load
 renderCart();
 
-// Hook up product buttons
+// ------------------- PRODUCT PAGE BUTTONS -------------------
+
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".add-to-cart").forEach(button => {
     button.addEventListener("click", () => {
       const product = {
-        id: button.dataset.id, // ✅ consistent ID
+        id: button.dataset.id,
         name: button.dataset.name,
         flavor: button.dataset.flavor || "Default",
         price: parseFloat(button.dataset.price),
