@@ -15,9 +15,10 @@ const totalEl = document.getElementById("total");
 const freeShipProgressEl = document.getElementById("free-ship-progress");
 const promoInput = document.getElementById("promo-code");
 const applyPromoBtn = document.getElementById("apply-promo");
-
 const miniCartContainer = document.getElementById("mini-cart");
 const closeMiniCartBtn = document.getElementById("close-mini-cart");
+
+const checkoutBtn = document.querySelector(".checkout-btn");
 
 // ------------------- CART FUNCTIONS -------------------
 
@@ -149,6 +150,15 @@ function closeMiniCart() {
 
 if (closeMiniCartBtn) {
   closeMiniCartBtn.addEventListener("click", closeMiniCart);
+}
+
+if (checkoutBtn) {
+  checkoutBtn.addEventListener("click", () => {
+    cart = [];
+    saveCart();
+    renderCart();
+    alert("Thank you...Your order has been placed and is being processed.");
+  });
 }
 
 // ------------------- INIT -------------------

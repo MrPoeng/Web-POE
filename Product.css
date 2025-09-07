@@ -302,23 +302,23 @@ html {
 
 /* Back to Top Button */
 .back-to-top {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: goldenrod;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  cursor: pointer;
-  display: none; /* hidden by default */
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  transition: opacity 0.3s ease-in-out;
-  z-index: 1000;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: goldenrod;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none; /* hidden by default */
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease-in-out, background 0.3s ease;
+    z-index: 1000;
 }
 
 .back-to-top:hover {
@@ -370,21 +370,56 @@ html {
 }
 
 .close-cart {
+    align-self: flex-end;
     background: none;
     border: none;
     font-size: 20px;
     cursor: pointer;
 }
 
-.mini-cart-item {
+.mini-cart-items{
     flex: 1;
     overflow-y: auto;
     padding: 15px;
 }
 
+.mini-cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.mini-cart img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 8px;
+  border-radius: 6px;
+}
+
 .mini-cart-footer {
     padding: 15px;
     border-top: 1px solid #ddd;
+}
+
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 1500;
+}
+
+.cart-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 .subtotal {
@@ -424,24 +459,6 @@ html {
     padding: 4px 8px;
     cursor: pointer;
     border-radius: 5px;
-}
-
-.back-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 15px;
-    border-radius: 50%;
-    border: none;
-    background: goldenrod;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: none; /* hidden by default */
-    z-index: 1000;
-}
-.back-to-top:hover {
-    background: darkgoldenrod;
 }
 
 .cart-btn {

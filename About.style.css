@@ -33,7 +33,7 @@ body::before {
 .navbar {
     position: absolute; /* Stick navbar to the top */
     top: 0;
-    left: 0;
+    right: 150px;
     width: 100%;
     z-index: 1000; /* Keep above all content */
     padding: 15px 0;

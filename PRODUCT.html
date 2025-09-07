@@ -58,8 +58,8 @@
             <div class="tile-label">Coals</div>
          </div>
          </a>
-      </div>
     </div>
+   
 
     <div id="hubblies" class="product-grid">
 
@@ -965,32 +965,50 @@
         const miniCartItems = document.querySelector(".mini-cart-items");
         const cartTotal = document.getElementById("cart-total");
 
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function saveCart() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
 
         // Open mini cart automatically when adding an item
         function openCart() {
-            miniCart.style.display = "block";
+            miniCart.classList.add("open");
         }
 
         // Close mini cart
-        closeCartBtn.addEventListener("click", () => {
-            miniCart.style.display = "none";
-        });
+        function closeCart() {
+            miniCart.classList.remove("open");
+        }
+
+        if (closeCartBtn) {
+        closeCartBtn.addEventListener("click", closeCart);
+        }
 
         // Handle "Add to Cart"
         document.querySelectorAll(".add-to-cart").forEach(button => {
             button.addEventListener("click", e => {
                 e.preventDefault();
                 const productCard = button.closest(".product-card");
-                const name = productCard.querySelector(".product-name").innerText;
-                const price = parseFloat(productCard.querySelector(".product-price").innerText.replace("R", ""));
+                const name = productCard.querySelector(".product-name").textContent;
+                const price = parseFloat(
+                    productCard.querySelector(".product-price").textContent.replace("R", "")
+            );
+                const image = productCard.querySelector("img").src;
                 
-                addToCart({ name, price });
+                addToCart({ name, price, image });
             });
         });
 
         function addToCart(product) {
-            cart.push(product);
+            const existing = cart.find(item => item.name === product.name);
+            if (existing) {
+                existing.qty = (existing.qty || 1) + 1;
+            } else {
+                product.qty = 1;
+                cart.push(product);
+            }
+            saveCart();
             updateMiniCart();
             openCart();
         }
@@ -1000,29 +1018,33 @@
             let total = 0;
 
             cart.forEach((item, index) => {
-                total += item.price;
+                total += item.price * item.qty;
                 const div = document.createElement("div");
                 div.classList.add("mini-cart-item");
                 div.innerHTML = `
-                    <span>${item.name}</span>
-                    <span>R${item.price}</span>
-                    <button class="remove-item" data-index="${index}">&times;</button>
+                    <img src="${item.image}" alt="${item.name}" style="width:50px; height:50px; object-fit:cover; margin-right:8px; border-radius:6px;">
+                    <div style="flex:1;">
+                    <span>${item.name} (x${item.qty})</span><br>
+                    <span>R${item.price * item.qty}</span>
+                    </div>
+                    <button class="remove-item" data-index="${index}" style="margin-left:10px;">&times;</button>
                 `;
                 miniCartItems.appendChild(div);
             });
 
-            cartTotal.innerText = "R" + total;
+            cartTotal.innerText = "R" + total.toFixed(2);
 
             // Attach remove buttons
             document.querySelectorAll(".remove-item").forEach(btn => {
                 btn.addEventListener("click", () => {
                     const idx = btn.dataset.index;
                     cart.splice(idx, 1);
+                    saveCart();
                     updateMiniCart();
                 });
             });
         }
-        
+        updateMiniCart();
     </script>
     <script src="cart.js"></script>
 </body>
