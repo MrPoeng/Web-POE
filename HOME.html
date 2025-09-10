@@ -53,15 +53,13 @@ Acknowledgement: Main structure and page layout inspired/copied from
                  <div class="form">
 
                     <div class="icon">
-                        <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
-                        <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
-                        <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+                        <a href="https://www.facebook.com/hookahconcept"><ion-icon name="logo-facebook"></ion-icon></a>
+                        <a href="https://www.instagram.com/hookah_concept_/"><ion-icon name="logo-instagram"></ion-icon></a>
+                        <a href="https://twitter.com/"><ion-icon name="logo-twitter"></ion-icon></a>
                     </div>
                  </div>   
         </div>       
      </div>
-
-    <button id="backToTop" class="back-to-top" aria-label="back-to-top````````````````````````````````````````````````````````````"> ↑ </button> 
 
   <script>
     const joinBtn = document.querySelector('.cn');
@@ -79,26 +77,7 @@ Acknowledgement: Main structure and page layout inspired/copied from
       slogan.classList.remove('fadeout');
       search.classList.remove('fadeout');
       par.classList.remove('fadeout');
-    });
-
-    // Back to Top Button functionality
-    const backToTopBtn = document.getElementById("backToTop");
-    const hubbliesSection = document.getElementById("hubblies");
-
-    window.addEventListener("scroll", () => {
-        if (!hubbliesSection) return;
-        const hubbliesTop = hubbliesSection ? hubbliesSection.offsetTop : 0;
-
-        if (window.scrollY >= hubbliesTop) {
-            backToTopBtn.style.display = "flex";
-        } else {
-            backToTopBtn.style.display = "none";
-    }
-    });
-
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    });    
   </script>
 </body>
 </html>

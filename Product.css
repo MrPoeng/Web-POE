@@ -428,17 +428,24 @@ html {
 }
 
 .checkout-btn {
+    display: inline-block;
     width: 100%;
-    padding: 12px;
-    background: goldenrod;
-    border: none;
+    padding: 12px 0;
+    background-color: burlywood;
     color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border: none;
     border-radius: 8px;
     cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    text-decoration: none;
 }
 
 .checkout-btn:hover {
     background: darkgoldenrod;
+    text-decoration: none;
 }
 
 .cart-item {

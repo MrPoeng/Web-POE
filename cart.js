@@ -30,17 +30,17 @@ function renderCart() {
   if (cartItemsEl) cartItemsEl.innerHTML = "";
   if (miniCartEl) miniCartEl.innerHTML = "";
 
-  cart.forEach(item => {
+  cart.forEach((item, index) => {
     // Full cart
     if (cartItemsEl) {
       const div = document.createElement("div");
       div.classList.add("cart-item");
       div.innerHTML = `
-        <img src="${item.img}" alt="${item.name}">
+        <img src="${item.img}" alt="${item.name}" style="width:80px; height:80px; object-fit:cover; border-radius:6px;">
         <div class="item-details">
           <h3>${item.name}</h3>
-          <p>Flavor: ${item.flavor}</p>
-          <p>R${item.price} each</p>
+          ${item.flavor ? `<p>Flavor: ${item.flavor}</p>` : ""}
+          <p>R${item.price.toFixed(2)} each</p>
           <div class="quantity">
             <button onclick="changeQty('${item.id}', '${item.flavor}', -1)">−</button>
             <input type="number" value="${item.qty}" min="1" 
@@ -58,12 +58,23 @@ function renderCart() {
       const miniDiv = document.createElement("div");
       miniDiv.classList.add("mini-cart-item");
       miniDiv.innerHTML = `
-        <p>${item.name} (${item.flavor}) x ${item.qty} - R${(item.price * item.qty).toFixed(2)}</p>
+        <img src="${item.img}" alt="${item.name}" style="width:40px; height:40px; object-fit:cover; margin-right:8px; border-radius:4px;">
+        <span>${item.name}${item.flavor ? ` (${item.flavor})` : ""} x ${item.qty} - R${(item.price * item.qty).toFixed(2)}</span>
+        <button class="remove-mini-item" data-index="${index}" style="margin-left:10px;">&times;</button>
       `;
       miniCartEl.appendChild(miniDiv);
     }
   });
 
+  document.querySelectorAll(".remove-mini-item").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idx = btn.dataset.index;
+      cart.splice(idx, 1);
+      saveCart();
+      renderCart();
+  });
+});
+  
   updateTotals();
   saveCart();
 }
@@ -177,16 +188,35 @@ renderCart();
 
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".add-to-cart").forEach(button => {
-    button.addEventListener("click", () => {
-      const product = {
-        id: button.dataset.id,
-        name: button.dataset.name,
-        flavor: button.dataset.flavor || "Default",
-        price: parseFloat(button.dataset.price),
-        img: button.dataset.img,
-        qty: 1
-      };
-      addToCart(product);
+    button.addEventListener("click", e => {
+      e.preventDefault();
+
+      const productCard = button.closest(".product-card");
+      if (!productCard) return;
+
+      // Grab product details
+      const id = productCard.dataset.id || productCard.querySelector(".product-name").textContent.trim();
+      const name = productCard.querySelector(".product-name")?.textContent.trim() || "Unnamed Product";
+      const price = parseFloat(
+        productCard.querySelector(".product-price")?.textContent.replace("R", "").trim() || 0
+      );
+      const img = productCard.querySelector(".product-img")?.src || "";
+      const flavor = productCard.querySelector(".product-flavor")?.textContent.trim() || null;
+
+      if (!name || !price || !img) {
+        console.warn("Incomplete product data, cannot add to cart:", productCard);
+        return;
+      }
+
+      // Add to cart
+      addToCart({
+        id,
+        name,
+        price,
+        img,
+        qty: 1,
+        flavor
+      });
     });
   });
 });
