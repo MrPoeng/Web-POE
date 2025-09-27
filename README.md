@@ -10,3 +10,4 @@ Cart page is almost fully functional
 Product page has a snippet of Java Code at the bottom of all the HTML code.
 currently working on the responsiveness of the Home page
 Also working on the responsivenesss of the other pages of the website
+Made my logo appear on all the tabs at the top
