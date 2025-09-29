@@ -11,3 +11,5 @@ Product page has a snippet of Java Code at the bottom of all the HTML code.
 currently working on the responsiveness of the Home page
 Also working on the responsivenesss of the other pages of the website
 Made my logo appear on all the tabs at the top
+Contact page has been fixed and is fully working now.
+Add JS code to make the send button work
