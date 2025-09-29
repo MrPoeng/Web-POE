@@ -26,6 +26,22 @@ body {
   z-index: 200;
 }
 
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: gold;
+}
+
 .main {
     width: 100%;
     position: relative;
@@ -282,6 +298,12 @@ body {
     padding-top: 300px; /* reduce offset */
   }
 
+    .navbar {
+   flex-direction: column;
+   align-items: centre;
+   text-align: center;
+  }
+
   .cart-container {
     margin: -200px auto 20px;
     width: 95%;
@@ -308,33 +330,100 @@ body {
     width: 100%;
     margin-bottom: 10px;
   }
-}
 
-@media (max-width: 480px) {
-  .main {
-    padding-top: 200px;
-  }
-
-  .cart-container {
-    margin: -100px auto 15px;
-    padding: 12px;
-    border-radius: 8px;
-  }
-
-  .cart-item img {
-    width: 100%;
-    max-width: 180px;
-  }
-
-  .quantity input {
-    width: 40px;
-  }
-
-    .logo {
-    font-size: 1.2rem;
+    .nav-links {
+    display: none; /* hide links, show menu button */
   }
 
   .menu-toggle {
-    font-size: 1.3rem;
+    display: block;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
   }
+
+  /* When menu is active */
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(0,0,0,0.9);
+    padding: 15px 20px;
+    border-radius: 8px;
+  }
+}
+/*Phones*/
+@media (max-width: 600px) {
+    .cart-container {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .cart-item img {
+        width: 100%;
+        max-height: 100px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .item-details h3 {
+        font-size: 1rem;
+        margin: 4px 0;
+    }
+
+    .item-details p {
+        font-size: 0.85rem;
+        margin: 2px 0;
+    }
+
+    .quantity input {
+        width: 35px;
+        font-size: 0.85rem;
+    }
+
+    .quantity button {
+        font-size: 0.85rem;
+        padding: 5px 8px;
+    }
+
+    .checkout-btn,
+    .express-checkout {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    /* Hide search bar + button on mobile */
+    .srch,
+    .btn {
+        display: none;
+    }
+
+    .menu ul {
+      flex-direction: column;
+      width: 100%;
+      margin: 10px 0;
+      gap: 15px;
+    }
+
+    .navbar,
+    .logo {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      top: -275px;
+    }
 }

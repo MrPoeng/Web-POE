@@ -40,7 +40,7 @@
     <div class="contact-container">
       <!-- Contact Form -->
       <div class="contact-form">
-        <form action="#" method="post">
+        <form id="contactForm" action="#" method="post">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
 
@@ -58,8 +58,8 @@
 
         </!--SuccessMessage -->
          <!-- Contact Details -->
-       <div id="successMessage">
-        ✅ Thank you! Your message has been sent.
+       <div id="successMessage" style="display: none; margin-top: 10px; color: green; font-weight: bold;">
+        ✅ Thank You!! Your message has been sent.<br> We'll get back to you as soon as possible..
 
       </div>
 
@@ -93,13 +93,16 @@
         form.addEventListener("submit", function (e) {
             e.preventDefault();
             form.reset();
-            successMessage.classList.add("show");
+            successMessage.style.display ="block";
 
             setTimeout(() => {
-                successMessage.classList.remove("show");
-            }, 6000);
+                successMessage.style.display = "none";
+            }, 5000);
+
+           
         });
     });
+
     
   </script>
 </body>

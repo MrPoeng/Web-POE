@@ -36,7 +36,7 @@ function renderCart() {
       const div = document.createElement("div");
       div.classList.add("cart-item");
       div.innerHTML = `
-        <img src="${item.img}" alt="${item.name}" style="width:80px; height:80px; object-fit:cover; border-radius:6px;">
+        <img src="${item.image}" alt="${item.name}" style="width:80px; height:80px; object-fit:cover; border-radius:6px;">
         <div class="item-details">
           <h3>${item.name}</h3>
           ${item.flavor ? `<p>Flavor: ${item.flavor}</p>` : ""}
@@ -47,7 +47,7 @@ function renderCart() {
                    onchange="setQty('${item.id}', '${item.flavor}', this.value)">
             <button onclick="changeQty('${item.id}', '${item.flavor}', 1)">+</button>
           </div>
-          <button onclick="removeItem('${item.id}', '${item.flavor}')">Remove</button>
+          <button class="remove-btn" data-idex="${item}">Remove</button>
         </div>
       `;
       cartItemsEl.appendChild(div);
@@ -66,9 +66,17 @@ function renderCart() {
     }
   });
 
+ /* document.querySelectorAll(".remove-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const flavor = btn.dataset.flavor || null;
+      removeItem(id, flavor);
+    })
+  })*/
+
   document.querySelectorAll(".remove-mini-item").forEach(btn => {
     btn.addEventListener("click", () => {
-      const idx = btn.dataset.index;
+      const idx = parseInt(btn.dataset.index, 10);
       cart.splice(idx, 1);
       saveCart();
       renderCart();
@@ -80,7 +88,7 @@ function renderCart() {
 }
 
 function changeQty(id, flavor, delta) {
-  const item = cart.find(i => i.id === id && i.flavor === flavor);
+  const item = cart.find(i => i.id === id && (i.flavor || "") === (flavor || ""));
   if (item) {
     item.qty += delta;
     if (item.qty < 1) item.qty = 1;
@@ -89,7 +97,7 @@ function changeQty(id, flavor, delta) {
 }
 
 function setQty(id, flavor, qty) {
-  const item = cart.find(i => i.id === id && i.flavor === flavor);
+  const item = cart.find(i => i.id === id && (i.flavor || "") === (flavor || ""));
   if (item) {
     item.qty = parseInt(qty);
     if (item.qty < 1) item.qty = 1;
@@ -98,15 +106,18 @@ function setQty(id, flavor, qty) {
 }
 
 function removeItem(id, flavor) {
+  flavor = flavor || null;
   cart = cart.filter(i => !(i.id === id && i.flavor === flavor));
   renderCart();
 }
 
 function addToCart(product) {
-  const existing = cart.find(i => i.id === product.id && i.flavor === product.flavor);
+  const existing = cart.find(i => i.id === product.id && (i.flavor || "") === (product.flavor || ""));
   if (existing) {
     existing.qty += product.qty;
   } else {
+    product.qty = product.qty || 1;
+    product.image = product.image || product.img || "";
     cart.push(product);
   }
   renderCart();
@@ -131,10 +142,11 @@ function updateTotals() {
   let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
   let discount = subtotal * promoDiscount;
   let tax = (subtotal - discount) * 0.05; // 5% tax
-  let total = subtotal - discount + tax + shippingCost;
+  let effectiveShipping = subtotal >= freeShippingThreshold ? 0 : shippingCost;
+  let total = subtotal - discount + tax + effectiveShipping;
 
   if (subtotalEl) subtotalEl.textContent = `R${(subtotal - discount).toFixed(2)}`;
-  if (shippingEl) shippingEl.textContent = `R${shippingCost}`;
+  if (shippingEl) shippingEl.textContent = `R${effectiveShipping}`;
   if (taxEl) taxEl.textContent = `R${tax.toFixed(2)}`;
   if (totalEl) totalEl.textContent = `R${total.toFixed(2)}`;
 
@@ -145,7 +157,7 @@ function updateTotals() {
     freeShipProgressEl.textContent =
       subtotal >= freeShippingThreshold
         ? "Free shipping!"
-        : `R${freeShippingThreshold - subtotal} to free shipping`;
+        : `R${(freeShippingThreshold - subtotal).toFixed(2)} to free shipping`;
   }
 }
 
@@ -185,6 +197,14 @@ window.addToCart = addToCart;
 renderCart();
 
 // ------------------- PRODUCT PAGE BUTTONS -------------------
+document.querySelectorAll(".remove-item").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const idx = btn.dataset.index;
+    cart.splice(idx, 1);
+    saveCart();
+    updateMiniCart();
+  })
+})
 
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".add-to-cart").forEach(button => {

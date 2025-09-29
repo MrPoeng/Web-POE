@@ -161,8 +161,46 @@ body::before {
     }
 }
 
+/*mobile*/
 @media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        right: 0; /* Fix alignment issue */
+    }
+
+    .menu ul {
+        flex-direction: column;
+        width: 100%;
+        margin: 10px 0;
+        gap: 15px;
+    }
+
+    .menu ul li a {
+        font-size: 1rem;
+    }
+
+    /* About page text adjustments */
+    .about-container {
+        padding: 190px 15px 20px 15px;
+    }
+
+    .about-container h1 {
+        font-size: 1.8rem;
+    }
+
+    .about-content p {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    /* Footer stacks */
     .site-footer_item {
         flex: 1 1 100%;
+    }
+
+    .site-footer_content {
+        text-align: center;
     }
 }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="Product.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="icon" type="images/x-icon" href="Images/logo4.png">
 </head>
 <body>
     <div class="main">
@@ -19,7 +20,7 @@
                 <ul>
                     <li><a href="HOME.html">HOME</a></li>
                     <li><a href="ABOUT.html">ABOUT</a></li>
-                    <li><a href="PRODUCT.html">PRODUCTS</a></li>
+                    <li><a href="PRODUCT.html" class="active">PRODUCTS</a></li>
                     <li><a href="CONTACT.html">CONTACT</a></li>
                 </ul>
             </div>
@@ -942,9 +943,12 @@
             </div>
             <input type="text" id="promo-code" placeholder="Promo code">
             <button id="apply-promo">Apply</button>
-            <button class="checkout-btn"><a href="Cart.html">Cart</button>
+            <button class="checkout-btn" onclick="location.href='Cart.html'">Cart</button>
         </div>
     </div>
+    <footer class="footer">
+    <p>© 2025 Supreme Shisha. All Rights Reserved.</p>
+    </footer>
 
     <button class="back-to-top" id="backToTop">&#8679</button>
 
@@ -952,10 +956,10 @@
         //Back to top button
         const backToTopButton = document.getElementById('backToTop');
         window.addEventListener("scroll", () => {
-            backToTop.style.display = window.scrollY > 300 ? "block" : "none";
+            backToTopButton.style.display = window.scrollY > 300 ? "block" : "none";
         });
-        backToTop.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behaviour: "smooth"});
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth"});
         });
 
         // Mini cart
@@ -982,7 +986,7 @@
         // Close mini cart
         function closeCart() {
             miniCart.classList.remove("open");
-            clearTimeout(catTimeout);
+            clearTimeout(cartTimeout);
         }
 
         function resetCartTimer() {

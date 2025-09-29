@@ -291,8 +291,69 @@ body {
 }
 
 @media (max-width: 600px) {
+    .product-tile:nth-child(-n+4)
+    .product-card:nth-child(-n+4) {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        visibility: visible !important;
+    }
+    .product-image {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
     .product-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .product-tile {
+        padding: 8px;
+        font-size: 0.9rem;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .product-tile img {
+        width: 100%;
+        max-height: 100px;
+        object-fit: cover;
+        border-radius: 4px 0;
+    }
+
+    .product-tile h3 {
+        font-size: 1rem;
+        margin: 2px 0;
+    }
+
+    .product-tile p {
+        font-size: 0.85rem;
+        margin: 2px 0;
+    }
+
+    .product-tile button {
+        font-size: 0.85rem;
+        padding: 5px 8px;
+    }
+
+    .tiles {
+        padding: 10px;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tile {
+        width: 100%;
+        height: 0px;
+    }
+
+    .srch,
+    .btn {
+        display: none;
     }
 }
 
@@ -318,7 +379,7 @@ html {
     align-items: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     transition: opacity 0.3s ease-in-out, background 0.3s ease;
-    z-index: 1000;
+    z-index: 1;
 }
 
 .back-to-top:hover {
@@ -341,7 +402,7 @@ html {
     background: darkgoldenrod;
 }
 
-/* mini caet sidebar */
+/* mini cart sidebar */
 .mini-cart {
     position: fixed;
     top: 0;
@@ -354,7 +415,7 @@ html {
     transition: right 0.4s ease;
     display: flex;
     flex-direction: column;
-    z-index: 2000;
+    z-index: 1000;
 }
 
 .mini-cart.open {
@@ -441,6 +502,7 @@ html {
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
     text-decoration: none;
+    z-index: 1001;
 }
 
 .checkout-btn:hover {
@@ -482,4 +544,18 @@ html {
 .cart-btn:hover {
     transform: scale(1.1);
     color: gold;
+}
+
+/* Footer */
+.footer {
+  background: rgba(0, 0, 0, 0.7);
+  border-top: 2px solid #D4AF37;
+  padding: 20px;
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.footer p:hover {
+  color: antiquewhite;
 }
