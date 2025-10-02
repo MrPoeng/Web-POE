@@ -47,7 +47,7 @@ function renderCart() {
                    onchange="setQty('${item.id}', '${item.flavor}', this.value)">
             <button onclick="changeQty('${item.id}', '${item.flavor}', 1)">+</button>
           </div>
-          <button class="remove-btn" data-idex="${item}">Remove</button>
+          <button class="remove-btn" data-index="${index}">Remove</button>
         </div>
       `;
       cartItemsEl.appendChild(div);
@@ -60,31 +60,28 @@ function renderCart() {
       miniDiv.innerHTML = `
         <img src="${item.img}" alt="${item.name}" style="width:40px; height:40px; object-fit:cover; margin-right:8px; border-radius:4px;">
         <span>${item.name}${item.flavor ? ` (${item.flavor})` : ""} x ${item.qty} - R${(item.price * item.qty).toFixed(2)}</span>
-        <button class="remove-mini-item" data-index="${index}" style="margin-left:10px;">&times;</button>
+        <button class="remove-btn" data-index="${index}" style="margin-left:10px;">&times;</button>
       `;
       miniCartEl.appendChild(miniDiv);
     }
   });
 
- /* document.querySelectorAll(".remove-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.id;
-      const flavor = btn.dataset.flavor || null;
-      removeItem(id, flavor);
-    })
-  })*/
-
-  document.querySelectorAll(".remove-mini-item").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const idx = parseInt(btn.dataset.index, 10);
-      cart.splice(idx, 1);
-      saveCart();
-      renderCart();
-  });
-});
-  
+  attachRemoveListeners();
   updateTotals();
   saveCart();
+}
+
+function attachRemoveListeners() {
+  document.querySelectorAll(".remove-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const  idx = parseInt(btn.dataset.index, 10);
+      if (!isNaN(idx)) {
+        cart.splice(idx, 1);
+        saveCart();
+        renderCart();
+      }
+    });
+  });
 }
 
 function changeQty(id, flavor, delta) {
@@ -105,12 +102,6 @@ function setQty(id, flavor, qty) {
   }
 }
 
-function removeItem(id, flavor) {
-  flavor = flavor || null;
-  cart = cart.filter(i => !(i.id === id && i.flavor === flavor));
-  renderCart();
-}
-
 function addToCart(product) {
   const existing = cart.find(i => i.id === product.id && (i.flavor || "") === (product.flavor || ""));
   if (existing) {
@@ -129,7 +120,7 @@ function addToCart(product) {
 function applyPromo() {
   const code = promoInput.value.trim().toUpperCase();
   if (code === "SHISHA10") {
-    promoDiscount = 0.1;
+    promoDiscount = 0.15;
   } else {
     promoDiscount = 0;
   }
@@ -171,20 +162,54 @@ function closeMiniCart() {
   if (miniCartContainer) miniCartContainer.classList.remove("open");
 }
 
-if (closeMiniCartBtn) {
-  closeMiniCartBtn.addEventListener("click", closeMiniCart);
-}
+if (closeMiniCartBtn) closeMiniCartBtn.addEventListener("click", closeMiniCart);
 
 if (checkoutBtn) {
   checkoutBtn.addEventListener("click", () => {
-    cart = [];
-    saveCart();
-    renderCart();
-    alert("Thank you...Your order has been placed and is being processed.");
+
+    const modal = document.getElementById("orderModal");
+    if (modal) modal.style.display = "block";
   });
 }
 
-// ------------------- INIT -------------------
+const closeOrderModal = document.getElementById("closeOrderModal");
+if (closeOrderModal) {
+  closeOrderModal.addEventListener("click", () => {
+    document.getElementById("orderModal").style.display ="none";
+
+    let lastOrderNum = localStorage.getItem("lastOrderNumber") || "001";
+    let nextOrderNum = String(parseInt(lastOrderNum, 10) + 1).padStart(3, "0");
+
+    localStorage.setItem("lastOrderNumber", nextOrderNum);
+    
+    const orderNumberModal = document.getElementById("orderNumberModal");
+    const orderNumberText = document.getElementById("orderNumberText");
+
+    if (orderNumberModal && orderNumberText) {
+      orderNumberText.textContent = `Your order number is #${nextOrderNum}`;
+      orderNumberModal.style.display = "block";
+    }
+  });
+}
+
+const closeOrderNumberModal = document.getElementById("closeOrderNumberModal");
+if (closeOrderNumberModal) {
+  closeOrderNumberModal.addEventListener("click", () => {
+    const orderNumberModal = document.getElementById("orderNumberModal");
+    if (orderNumberModal) orderNumberModal.style.display = "none";
+
+    cart = [];
+    saveCart();
+    renderCart();
+  });
+}
+
+window.addEventListener("click", (e) => {
+  const ordermodal = document.getElementById("orderModal");
+  const orderNumberModal = document.getElementById("orderNumberModal");
+  if (ordermodal && e.target === ordermodal) ordermodal.style.display = "none";
+  if (orderNumberModal && e.target === orderNumberModal) orderNumberModal.style.display = "none"
+});
 
 if (applyPromoBtn) {
   applyPromoBtn.addEventListener("click", applyPromo);
@@ -195,16 +220,6 @@ window.addToCart = addToCart;
 
 // Render existing cart on load
 renderCart();
-
-// ------------------- PRODUCT PAGE BUTTONS -------------------
-document.querySelectorAll(".remove-item").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const idx = btn.dataset.index;
-    cart.splice(idx, 1);
-    saveCart();
-    updateMiniCart();
-  })
-})
 
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".add-to-cart").forEach(button => {
@@ -217,16 +232,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Grab product details
       const id = productCard.dataset.id || productCard.querySelector(".product-name").textContent.trim();
       const name = productCard.querySelector(".product-name")?.textContent.trim() || "Unnamed Product";
-      const price = parseFloat(
-        productCard.querySelector(".product-price")?.textContent.replace("R", "").trim() || 0
-      );
+      const price = parseFloat(productCard.querySelector(".product-price")?.textContent.replace("R", "").trim() || 0);
       const img = productCard.querySelector(".product-img")?.src || "";
       const flavor = productCard.querySelector(".product-flavor")?.textContent.trim() || null;
 
-      if (!name || !price || !img) {
-        console.warn("Incomplete product data, cannot add to cart:", productCard);
-        return;
-      }
+      if (!name || !price || !img) return;
 
       // Add to cart
       addToCart({

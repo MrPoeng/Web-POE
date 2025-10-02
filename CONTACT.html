@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Contact Supreme Shisha. Get in touch with us for inquiries about our products, events, or general questions.">
-  <title>Supreme Shisha - Contact</title>
-  <link rel="icon" type="images/x-icon" href="Images/logo4.png">
+  <title>Hookah Concept - Contact</title>
+  <link rel="icon" type="images/x-icon" href="Images/logo99.png">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="contact.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,7 +18,7 @@
   <!-- Navbar -->
   <header class="navbar">
     <div class="icon">
-      <img src="images/logo4.png" alt="Supreme Shisha Logo">
+      <img src="images/logo99.png" alt="Supreme Shisha Logo">
     </div>
     <nav class="menu">
       <ul>
@@ -56,18 +56,18 @@
           <button type="submit">Send Message</button>
         </form>
 
-        </!--SuccessMessage -->
+        <!--</!--SuccessMessage -->
          <!-- Contact Details -->
-       <div id="successMessage" style="display: none; margin-top: 10px; color: green; font-weight: bold;">
+       <!--<div id="successMessage" style="display: none; margin-top: 10px; color: green; font-weight: bold;">
         ✅ Thank You!! Your message has been sent.<br> We'll get back to you as soon as possible..
 
-      </div>
+      </div> -->
 
       </div>
       <div class="contact-details">
         <h2>Contact Information</h2>
         <p><ion-icon name="call-outline"></ion-icon> +27 63 047 4060</p>
-        <p><ion-icon name="mail-outline"></ion-icon> info@supremeshisha.co.za</p>
+        <p><ion-icon name="mail-outline"></ion-icon> info@Hookah Concept.co.za</p>
         <p><ion-icon name="location-outline"></ion-icon> Sonpark, Nelspruit CBD, Mpumalanga, South Africa</p>
 
         <h3>Follow Us</h3>
@@ -85,24 +85,42 @@
     <p>© 2025 Supreme Shisha. All Rights Reserved.</p>
   </footer>
 
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>✅ Thank You!</h2>
+      <p>Your message has been sent successfully.<br> We'll get back to you as soon as possible.</p>
+    </div>
+  </div>
+
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("contactForm");
-        const successMessage = document.getElementById("successMessage");
+    document.addEventListener("DOMContentLoaded", function() {
+      const form = document.getElementById("contactForm");
+      const modal = document.getElementById("successModal");
+      const closeBtn = document.querySelector(".close");
 
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            form.reset();
-            successMessage.style.display ="block";
+      form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        form.reset();
 
-            setTimeout(() => {
-                successMessage.style.display = "none";
-            }, 5000);
+        modal.style.display = "block";
 
-           
-        });
+        setTimeout(() => {
+          modal.style.display = "none";
+        }, 5000);  
+      });
+
+      closeBtn.addEventListener("click", function() {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", function (e) {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
     });
-
     
   </script>
 </body>

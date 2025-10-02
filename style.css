@@ -11,9 +11,10 @@
 }
 
 .icon img {
-    width: 250px; 
+    width: 150px; 
     height: auto;
-    margin-top: 50px;
+    margin-top: 105px;
+    margin-left: -175px;
 }
 
 

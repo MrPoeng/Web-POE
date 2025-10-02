@@ -6,14 +6,14 @@
     <title>Cart</title>
     <link rel="stylesheet" href="cart.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="images/x-icon" href="Images/logo4.png">
+    <link rel="icon" type="images/x-icon" href="Images/logo99.png">
 </head>
 <body>
     <header>
         <div class="main">
         <div class="navbar">
             <div class="icon">
-                <img src="images/logo4.png" alt="Supreme Shisha Logo">    
+                <img src="images/logo99.png" alt="Supreme Shisha Logo">    
             </div>
 
             <div class="menu">
@@ -61,6 +61,21 @@
         <h3>Cart</h3>
         <div id="mini-cart-items"></div>
         <button id="close-mini-cart">Close</button>
+    </div>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeOrderModal">&times;</span>
+            <h2>Thank You!</h2>
+            <p>Your order has been placed and is being processed.</p>
+        </div>
+    </div>
+    <div id="orderNumberModal" class="modal">
+        <div class="modal-content">
+            <span id="closeOrderNumberModal" class="close">&times;</span>
+            <h2>Order Confirmed</h2>
+            <p id="orderNumberText"></p>
+        </div>
     </div>
 
     <script src="cart.js"></script>
