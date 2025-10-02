@@ -13,3 +13,10 @@ Also working on the responsivenesss of the other pages of the website
 Made my logo appear on all the tabs at the top
 Contact page has been fixed and is fully working now.
 Add JS code to make the send button work
+UPDATES & CHANGES AFTER SUBMITTING PART 2
+Changed the logo & website name
+New name is Hookah Concept, inline with an existing business
+Also made it so the logo corresponds on the tab also
+Added modal popups to the contact page
+Modal popup also added to cart page
+Cart page Remove button now works properly
